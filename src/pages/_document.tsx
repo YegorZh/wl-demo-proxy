@@ -9,7 +9,7 @@ export default function Document() {
         <Main />
         <NextScript />
         <Script
-          src={`${process.env.UNIT_URL}/release/latest/components.js`}
+          src={`${process.env.NEXT_PUBLIC_UNIT_URL}/release/latest/components.js`}
           strategy="beforeInteractive"
         />
       </body>

@@ -1,37 +1,45 @@
-import { DemoType } from "@/pages/types";
+import { StartTriggerResponse } from "@/pages/types";
 import { useEffect, useState } from "react";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
+  const [res, setRes] = useState<StartTriggerResponse | null>(null);
 
   useEffect(() => {
     const startTrigger = async () => {
       try {
-        const res = await fetch(
-          process.env.NEXT_PUBLIC_RETOOL_START_TRIGGER_URL ?? "",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "Workflow-Api-Key":
-                process.env.NEXT_PUBLIC_RETOOL_WORKFLOW_API_KEY ?? "",
-            },
-            body: JSON.stringify({
-              demoType: DemoType.Businesses,
-              token: process.env.NEXT_PUBLIC_UNIT_TOKEN,
-            }),
-          }
-        );
+        console.log("Making request to API route");
+        const res = await fetch("/api/start-trigger", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
         if (!res.ok) {
-          throw new Error("Failed to start trigger");
+          console.error("Response status:", res.status);
+          console.error("Response status text:", res.statusText);
+          const errorText = await res.text();
+          console.error("Error response:", errorText);
+          throw new Error(
+            `Failed to start trigger: ${res.status} ${res.statusText}`
+          );
         }
 
-        const data = await res.json();
-        console.log(data);
+        const data: StartTriggerResponse = await res.json();
+        setRes(data);
+        console.log("Success response:", data);
         setIsLoading(false);
       } catch (error) {
-        console.error("Error:", error);
+        console.error("Detailed error:", error);
+        if (
+          error instanceof TypeError &&
+          error.message.includes("Failed to fetch")
+        ) {
+          console.error(
+            "Network error - Check VPN connection and DNS settings"
+          );
+        }
         setIsLoading(false);
       }
     };
@@ -42,11 +50,11 @@ export default function Home() {
   useEffect(() => {
     if (isLoading) return;
     const unit = document.createElement("unit-elements-white-label-app");
-    unit.setAttribute("theme", "{{themeUrl}}");
-    unit.setAttribute("jwt-token", "{{JwtToken}}");
-    unit.setAttribute("language", "{{languageUrl}}");
+    unit.setAttribute("theme", process.env.NEXT_PUBLIC_UNIT_THEME_URL ?? "");
+    console.log("Setting customer token:", res);
+    unit.setAttribute("customer-token", res?.customerToken ?? "");
     document.querySelector("#unit-app-placeholder")?.append(unit);
-  }, [isLoading]);
+  }, [isLoading, res]);
 
   return (
     <>
