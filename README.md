@@ -1,40 +1,178 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Unit White Label Demo Widget
 
-## Getting Started
+A Next.js-based embeddable widget for Unit's White Label Banking solution.
 
-First, run the development server:
+## Features
+
+- Embeddable iframe widget
+- Customizable dimensions
+- CORS-enabled for cross-origin embedding
+- Token persistence with localStorage
+- Responsive design
+- Loading state with custom styling
+
+## Prerequisites
+
+- Node.js 16.x or later
+- npm or yarn
+- Unit API credentials
+- Retool workflow configuration
+
+## Setup
+
+1. Clone the repository:
+
+```bash
+git clone <repository-url>
+cd unit-wl-demo-proxy
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Create environment file:
+
+```bash
+cp example.env .env
+```
+
+4. Update the `.env` file with your credentials:
+
+```env
+# Unit API Configuration
+NEXT_PUBLIC_UNIT_URL="https://ui.s.unit.sh"
+NEXT_PUBLIC_UNIT_THEME_URL="https://themes.unit.co/white-label-app/theme/theme.css"
+UNIT_TOKEN="your_unit_token_here"
+
+# Retool Configuration
+RETOOL_WORKFLOW_API_KEY="your_retool_workflow_api_key_here"
+RETOOL_START_TRIGGER_URL="your_retool_workflow_url_here"
+
+# CORS and Security Configuration
+ALLOWED_ORIGINS="*" # For development. In production, use specific domains
+ALLOWED_FROM="*" # For development. In production, use specific domains
+```
+
+5. Start the development server:
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The widget will be available at `http://localhost:3000/widget`
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Embedding the Widget
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+### Basic Embedding
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+Add the following iframe code to your website:
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```html
+<iframe
+  src="http://localhost:3000/widget?width=100%&height=600px"
+  width="100%"
+  height="600px"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+>
+</iframe>
+```
 
-## Learn More
+### Customizable Parameters
 
-To learn more about Next.js, take a look at the following resources:
+The widget accepts the following URL parameters:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+- `width`: Width of the widget (default: "100%")
+- `height`: Height of the widget (default: "600px")
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Example with custom dimensions:
 
-## Deploy on Vercel
+```html
+<iframe
+  src="http://localhost:3000/widget?width=800px&height=800px"
+  width="800"
+  height="800"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+>
+</iframe>
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Development
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+### Project Structure
+
+```
+unit-wl-demo-proxy/
+├── src/
+│   ├── components/     # React components
+│   ├── pages/         # Next.js pages
+│   ├── styles/        # Global styles
+│   └── types/         # TypeScript types
+├── public/            # Static files
+├── .env              # Environment variables
+└── next.config.js    # Next.js configuration
+```
+
+### Key Components
+
+- `UnitTriggerDemoWidget`: Main widget component
+- `start-trigger.ts`: API route for token generation
+- `widget.tsx`: Widget page with iframe support
+
+## Security Considerations
+
+1. In production, update `ALLOWED_ORIGINS` and `ALLOWED_FROM` in `.env` to specify allowed domains
+2. Ensure proper CORS configuration for your production environment
+3. Keep your API keys and tokens secure
+
+## Production Deployment
+
+1. Build the application:
+
+```bash
+npm run build
+# or
+yarn build
+```
+
+2. Start the production server:
+
+```bash
+npm start
+# or
+yarn start
+```
+
+## Troubleshooting
+
+1. If the widget doesn't load:
+
+   - Check browser console for errors
+   - Verify CORS settings
+   - Ensure all environment variables are set correctly
+
+2. If the token isn't persisting:
+   - Check browser localStorage
+   - Verify token expiration settings
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a new Pull Request
+
+## License
+
+[Your License Here]
