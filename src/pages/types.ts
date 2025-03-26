@@ -6,3 +6,7 @@ export type StartTriggerData = {
   demoType: DemoType;
   token: string;
 };
+
+export type StartTriggerResponse = {
+  customerToken: string;
+};
