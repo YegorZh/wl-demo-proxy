@@ -9,6 +9,7 @@ interface UnitTriggerDemoWidgetProps {
 const CUSTOMER_TOKEN_KEY = "unit_demo_customer_token";
 const TOKEN_TIMESTAMP_KEY = "unit_demo_token_timestamp";
 const ONE_YEAR_MS = 365 * 24 * 60 * 60 * 1000; // One year in milliseconds
+const UNIT_THEME_URL = "https://themes.unit.co/white-label-app/theme/theme.css";
 
 export default function UnitTriggerDemoWidget({
   width = "100%",
@@ -67,7 +68,7 @@ export default function UnitTriggerDemoWidget({
     if (isLoading) return;
 
     const unit = document.createElement("unit-elements-white-label-app");
-    unit.setAttribute("theme", process.env.NEXT_PUBLIC_UNIT_THEME_URL ?? "");
+    unit.setAttribute("theme", UNIT_THEME_URL);
     unit.setAttribute("customer-token", res?.customerToken ?? "");
     unit.style.width = width;
     unit.style.height = height;
