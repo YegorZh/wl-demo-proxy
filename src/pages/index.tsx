@@ -14,10 +14,18 @@ export default function Home() {
   const { width, height } = router.query;
 
   return (
-    <div className="widget-page">
+    <div
+      className="widget-page"
+      style={{
+        minWidth: "100vw",
+        minHeight: "100vh",
+        margin: 0,
+        padding: 0,
+      }}
+    >
       <UnitTriggerDemoWidget
-        width={width as string}
-        height={height as string}
+        width={(width as string) || "100vw"}
+        height={(height as string) || "100vh"}
       />
     </div>
   );

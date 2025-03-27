@@ -1,6 +1,6 @@
 # Unit White Label Demo Widget
 
-A Next.js-based embeddable demo widget for Unit's White Label Banking solution.
+A Next.js-based embeddable widget for Unit's White Label Banking solution demo.
 
 ## Prerequisites
 
@@ -37,16 +37,11 @@ cp example.env .env
 ```env
 # Unit API Configuration
 NEXT_PUBLIC_UNIT_URL="https://ui.s.unit.sh"
-NEXT_PUBLIC_UNIT_THEME_URL="https://themes.unit.co/white-label-app/theme/theme.css"
 UNIT_TOKEN="your_unit_token_here"
 
 # Retool Configuration
 RETOOL_WORKFLOW_API_KEY="your_retool_workflow_api_key_here"
 RETOOL_START_TRIGGER_URL="your_retool_workflow_url_here"
-
-# CORS and Security Configuration
-ALLOWED_ORIGINS="*" # For development. In production, use specific domains
-ALLOWED_FROM="*" # For development. In production, use specific domains
 ```
 
 5. Start the development server:
@@ -57,7 +52,22 @@ npm run dev
 yarn dev
 ```
 
-The widget will be available at `http://localhost:3000/widget`
+The widget will be available at `http://localhost:3000`
+
+## API Endpoints
+
+### Health Check
+
+- **Endpoint**: `/api/ping`
+- **Method**: Any
+- **Response**:
+  ```json
+  {
+    "status": "ok"
+  }
+  ```
+- **Status Code**: 200
+- **Use Case**: Health monitoring and availability checks
 
 ## Embedding the Widget
 
@@ -67,7 +77,7 @@ Add the following iframe code to your website:
 
 ```html
 <iframe
-  src="http://localhost:3000/widget?width=100%&height=600px"
+  src="http://localhost:3000?width=100%&height=600px"
   width="100%"
   height="600px"
   frameborder="0"
@@ -88,7 +98,7 @@ Example with custom dimensions:
 
 ```html
 <iframe
-  src="http://localhost:3000/widget?width=800px&height=800px"
+  src="http://localhost:3000?width=800px&height=800px"
   width="800"
   height="800"
   frameborder="0"
@@ -118,13 +128,13 @@ unit-wl-demo-proxy/
 
 - `UnitTriggerDemoWidget`: Main widget component
 - `start-trigger.ts`: API route for token generation
-- `widget.tsx`: Widget page with iframe support
+- `index.tsx`: Widget page with iframe support
 
 ## Security Considerations
 
-1. In production, update `ALLOWED_ORIGINS` and `ALLOWED_FROM` in `.env` to specify allowed domains
-2. Ensure proper CORS configuration for your production environment
-3. Keep your API keys and tokens secure
+1. The widget is configured with secure CORS and security headers
+2. Keep your API keys and tokens secure
+3. In production, consider restricting CORS to specific domains
 
 ## Production Deployment
 
