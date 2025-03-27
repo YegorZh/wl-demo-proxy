@@ -9,7 +9,7 @@ const UnitTriggerDemoWidget = dynamic(
   }
 );
 
-export default function UnitStartTriggerWidgetPage() {
+export default function Home() {
   const router = useRouter();
   const { width, height } = router.query;
 

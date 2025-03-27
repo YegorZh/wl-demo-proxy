@@ -1,15 +1,6 @@
 # Unit White Label Demo Widget
 
-A Next.js-based embeddable widget for Unit's White Label Banking solution.
-
-## Features
-
-- Embeddable iframe widget
-- Customizable dimensions
-- CORS-enabled for cross-origin embedding
-- Token persistence with localStorage
-- Responsive design
-- Loading state with custom styling
+A Next.js-based embeddable demo widget for Unit's White Label Banking solution.
 
 ## Prerequisites
 

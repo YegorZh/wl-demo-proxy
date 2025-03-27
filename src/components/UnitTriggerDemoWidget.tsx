@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {StartTriggerResponse} from "@/components/types"
+import { StartTriggerResponse } from "@/components/types";
 
 interface UnitTriggerDemoWidgetProps {
   width?: string;
