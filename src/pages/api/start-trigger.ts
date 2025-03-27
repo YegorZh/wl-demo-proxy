@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { DemoType } from "../types";
+import {DemoType} from "@/components/types"
 
 export default async function handler(
   req: NextApiRequest,
